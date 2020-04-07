@@ -1,5 +1,5 @@
 FROM golang:1.10.8 AS build
-WORKDIR /go/src/github.com/cloudflare/cloudflare-ingress-controller
+WORKDIR /go/src/github.com/0xkongamoto/cloudflare-ingress-controller
 
 ARG VERSION="unknown"
 
@@ -13,7 +13,7 @@ RUN GO_EXTLINK_ENABLED=0 CGO_ENABLED=0 GOOS=linux go build \
     -o /go/bin/argot \
     -ldflags="-w -s -extldflags -static -X main.version=${VERSION}" \
     -tags netgo -installsuffix netgo \
-    -v github.com/cloudflare/cloudflare-ingress-controller/cmd/argot
+    -v github.com/0xkongamoto/cloudflare-ingress-controller/cmd/argot
 
 FROM alpine:3.9 AS final
 RUN apk --no-cache add ca-certificates
