@@ -3,7 +3,7 @@ package argotunnel
 import (
 	"time"
 
-	"github.com/cloudflare/cloudflare-ingress-controller/internal/cloudflare"
+	"github.com/0xkongamoto/cloudflare-ingress-controller/internal/cloudflare"
 )
 
 const (

@@ -15,9 +15,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/cloudflare/cloudflare-ingress-controller/internal/argotunnel"
-	"github.com/cloudflare/cloudflare-ingress-controller/internal/cloudflare"
-	"github.com/cloudflare/cloudflare-ingress-controller/internal/k8s"
+	"github.com/0xkongamoto/cloudflare-ingress-controller/internal/argotunnel"
+	"github.com/0xkongamoto/cloudflare-ingress-controller/internal/cloudflare"
+	"github.com/0xkongamoto/cloudflare-ingress-controller/internal/k8s"
 	"github.com/oklog/run"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -136,7 +136,12 @@ func main() {
 			// and does not differential by tunnel (e.g. assumes a daemon per tunnel)
 			promregistry := prometheus.NewRegistry()
 			promregistry.MustRegister(
-				prometheus.NewProcessCollector(os.Getpid(), ""),
+				prometheus.NewProcessCollector(prometheus.ProcessCollectorOpts{
+					PidFn: func() (int, error) {
+						return os.Getpid(), nil
+					},
+					Namespace: "",
+				}),
 				prometheus.NewGoCollector(),
 			)
 
